@@ -1,0 +1,50 @@
+LICENSE:
+        nettools is free software; you can redistribute it and/or modify it
+        under the terms of the GNU Lesser General Public License as published
+        by the Free Software Foundation; either version 2.1 of the License, or
+        (at your option) any later version.
+
+        nettools is distributed in the hope that it will be useful, but
+        WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+        Lesser General Public License for more details.
+
+        You should have received a copy of the GNU Lesser General Public
+        License along with nettools; If not, see <http://www.gnu.org/licenses/>.
+
+COPYRIGHT: (ordered alphabetically)
+        Copyright (C) 2013 Intel Corp.
+        Copyright (C) 2015-2016 Red Hat, Inc.
+
+AUTHORS: (ordered alphabetically)
+        Alex Crawford <alex.crawford@coreos.com>
+        Andreas Henriksson <andreas@fatal.se>
+        Beniamino Galvani <bgalvani@redhat.com>
+        Camilo Aguilar <camilo.aguilar@gmail.com>
+        Cristian Rodríguez <crrodriguez@opensuse.org>
+        Daniel Mack <daniel@zonque.org>
+        Dan Williams <dcbw@redhat.com>
+        David Herrmann <dh.herrmann@gmail.com>
+        Eugene Yakubovich <eyakubovich@gmail.com>
+        Harald Hoyer <harald@redhat.com>
+        Jan Engelhardt <jengelh@inai.de>
+        Lennart Poettering <lennart@poettering.net>
+        Martin Pitt <martin.pitt@ubuntu.com>
+        Michal Schmidt <mschmidt@redhat.com>
+        Michal Sekletar <msekleta@redhat.com>
+        Nick Owens <mischief@coreos.com>
+        Patrik Flykt <patrik.flykt@linux.intel.com>
+        Ronny Chevalier <chevalier.ronny@gmail.com>
+        Ruben Kerkhof <ruben@rubenkerkhof.com>
+        Shawn Landden <shawn@churchofgit.com>
+        Steven Noonan <steven@uplinklabs.net>
+        Susant Sahani <ssahani@gmail.com>
+        Thomas Haller <thaller@redhat.com>
+        Thomas Hindoe Paaboel Andersen <phomes@gmail.com>
+        Tom Gundersen <teg@jklm.no>
+        Torstein Husebø <torstein@huseboe.net>
+        Umut Tezduyar Lindskog <umut.tezduyar@axis.com>
+        Veres Lajos <vlajos@gmail.com>
+        Vinay Kulkarni <vskibum@gmail.com>
+        Vito Caputo <vito.caputo@coreos.com>
+        Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
