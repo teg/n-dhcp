@@ -27,7 +27,7 @@ _public_ int n_dhcp4_client_new(NDhcp4Client **clientp) {
 
         assert(clientp);
 
-        client = calloc(sizeof(*client), 1);
+        client = calloc(1, sizeof(*client));
         if (!client)
                 return -ENOMEM;
 
