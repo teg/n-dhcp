@@ -27,9 +27,9 @@
 
 typedef struct NDhcp4Message NDhcp4Message;
 
-#define N_DHCP4_MESSAGE_MIN_SIZE (N_DHCP_NETWORK_MIN_SIZE -          \
-                                  N_DHCP_NETWORK_UDP_SIZE -          \
-                                  N_DHCP_NETWORK_IP_SIZE)
+#define N_DHCP4_MESSAGE_MIN_SIZE (N_DHCP4_NETWORK_MIN_SIZE -            \
+                                  N_DHCP_NETWORK_UDP_SIZE -             \
+                                  N_DHCP_NETWORK_IP4_SIZE)
 
 struct NDhcp4Message {
         NDhcp4Header header;
@@ -75,8 +75,8 @@ int n_dhcp4_outgoing_new(NDhcp4Outgoing **outgoingp, size_t max_size, uint8_t ov
         outgoing->max_size = N_DHCP4_MESSAGE_MIN_SIZE;
         outgoing->overload = overload;
 
-        if (max_size > N_DHCP_NETWORK_MIN_SIZE)
-                outgoing->max_size = max_size - N_DHCP_NETWORK_UDP_SIZE - N_DHCP_NETWORK_IP_SIZE;
+        if (max_size > N_DHCP4_NETWORK_MIN_SIZE)
+                outgoing->max_size = max_size - N_DHCP_NETWORK_UDP_SIZE - N_DHCP_NETWORK_IP4_SIZE;
 
         outgoing->message = calloc(1, outgoing->n_message);
         if (!outgoing->message)

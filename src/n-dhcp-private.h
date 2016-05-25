@@ -42,9 +42,9 @@ typedef struct NDhcp4Outgoing NDhcp4Outgoing;
  * Network Layers
  */
 
-#define N_DHCP_NETWORK_IP_SIZE (sizeof(struct iphdr))
+#define N_DHCP_NETWORK_IP4_SIZE (sizeof(struct iphdr))
 #define N_DHCP_NETWORK_UDP_SIZE (sizeof(struct udphdr))
-#define N_DHCP_NETWORK_MIN_SIZE (576)
+#define N_DHCP4_NETWORK_MIN_SIZE (576)
 
 /*
  * DHCP4 Messages
