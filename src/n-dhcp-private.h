@@ -45,12 +45,19 @@ typedef struct NDhcp4Outgoing NDhcp4Outgoing;
 #define N_DHCP_NETWORK_IP4_SIZE (sizeof(struct iphdr))
 #define N_DHCP_NETWORK_UDP_SIZE (sizeof(struct udphdr))
 #define N_DHCP4_NETWORK_MIN_SIZE (576)
+#define N_DHCP4_NETWORK_SERVER_PORT (67)
+#define N_DHCP4_NETWORK_CLIENT_PORT (68)
 
 /*
  * DHCP4 Messages
  */
 
 #define N_DHCP4_MESSAGE_MAGIC ((uint32_t)(0x63825363))
+
+enum {
+        N_DHCP4_OP_BOOTREQUEST                          = 1,
+        N_DHCP4_OP_BOOTREPLY                            = 2,
+};
 
 enum {
         N_DHCP4_OPTION_PAD                              = 0,
