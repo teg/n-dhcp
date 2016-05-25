@@ -105,7 +105,8 @@ NDhcp4Header *n_dhcp4_outgoing_get_header(NDhcp4Outgoing *outgoing) {
 }
 
 size_t n_dhcp4_outgoing_get_raw(NDhcp4Outgoing *outgoing, const void **rawp) {
-        *rawp = outgoing->message;
+        if (rawp)
+                *rawp = outgoing->message;
         return outgoing->n_message;
 }
 
@@ -391,7 +392,9 @@ int n_dhcp4_incoming_query(NDhcp4Incoming *incoming, uint8_t option, const void 
         if (!incoming->options[option].value)
                 return -ENODATA;
 
-        *datap = incoming->options[option].value;
-        *n_datap = incoming->options[option].size;
+        if (datap)
+                *datap = incoming->options[option].value;
+        if (n_datap)
+                *n_datap = incoming->options[option].size;
         return 0;
 }
