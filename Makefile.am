@@ -54,6 +54,7 @@ libndhcp_a_SOURCES = \
 	src/n-dhcp4-client.c \
 	src/n-dhcp4-lease.c \
 	src/n-dhcp4-message.c \
+	src/n-dhcp4-network.c \
 	src/ndhcp/n-dhcp4-client.h \
 	src/ndhcp/n-dhcp4-lease.h
 

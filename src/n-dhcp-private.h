@@ -17,6 +17,7 @@
   along with nettools; If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <linux/if_packet.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 #include <inttypes.h>
@@ -47,6 +48,14 @@ typedef struct NDhcp4Outgoing NDhcp4Outgoing;
 #define N_DHCP4_NETWORK_MIN_SIZE (576)
 #define N_DHCP4_NETWORK_SERVER_PORT (67)
 #define N_DHCP4_NETWORK_CLIENT_PORT (68)
+
+int n_dhcp4_network_raw_new(int ifindex,
+                            struct sockaddr_ll *addrp,
+                            uint16_t arp_type,
+                            const uint8_t *mac_addr,
+                            size_t n_mac_addr,
+                            uint32_t xid);
+int n_dhcp4_network_udp_new(uint32_t address, uint16_t port);
 
 /*
  * DHCP4 Messages
