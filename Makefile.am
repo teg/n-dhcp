@@ -53,6 +53,7 @@ libndhcp_a_SOURCES = \
 	src/n-dhcp-private.h \
 	src/n-dhcp4-client.c \
 	src/n-dhcp4-lease.c \
+	src/n-dhcp4-message.c \
 	src/ndhcp/n-dhcp4-client.h \
 	src/ndhcp/n-dhcp4-lease.h
 
@@ -114,6 +115,18 @@ test_api_SOURCES = \
 
 test_api_LDADD = \
 	libndhcp.so.0 # explicitly linked against public library
+
+# ------------------------------------------------------------------------------
+# test-message4
+
+default_tests += \
+	test-message4
+
+test_message4_SOURCES = \
+	src/test-message4.c
+
+test_message4_LDADD = \
+	libndhcp.a
 
 # ------------------------------------------------------------------------------
 # test suite
