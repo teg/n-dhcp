@@ -100,6 +100,18 @@ enum {
         N_DHCP4_OVERLOAD_SNAME                          = 2,
 };
 
+enum {
+        N_DHCP4_MESSAGE_DISCOVER                        = 1,
+        N_DHCP4_MESSAGE_OFFER                           = 2,
+        N_DHCP4_MESSAGE_REQUEST                         = 3,
+        N_DHCP4_MESSAGE_DECLINE                         = 4,
+        N_DHCP4_MESSAGE_ACK                             = 5,
+        N_DHCP4_MESSAGE_NAK                             = 6,
+        N_DHCP4_MESSAGE_RELEASE                         = 7,
+        N_DHCP4_MESSAGE_INFORM                          = 8,
+        N_DHCP4_MESSAGE_FORCERENEW                      = 9,
+};
+
 struct NDhcp4Header {
         uint8_t op;
         uint8_t htype;
@@ -140,7 +152,14 @@ struct NDhcp4Lease {
  */
 
 struct NDhcp4Client {
-        int unused;
+        unsigned int state;             /* current client state */
+        int efd;                        /* epoll fd */
+        int tfd;                        /* timer fd */
+        int rfd;                        /* raw socket */
+        int ufd;                        /* udp socket */
+        uint64_t u_t1;                  /* next T1 timeout, or 0 */
+        uint64_t u_t2;                  /* next T2 timeout, or 0 */
+        uint64_t u_lifetime;            /* next lifetime timeout, or 0 */
 };
 
 /*
