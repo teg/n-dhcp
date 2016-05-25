@@ -388,6 +388,12 @@ NDhcp4Header *n_dhcp4_incoming_get_header(NDhcp4Incoming *incoming) {
         return &incoming->message.header;
 }
 
+size_t n_dhcp4_incoming_get_raw(NDhcp4Incoming *incoming, const void **rawp) {
+        if (rawp)
+                *rawp = &incoming->message;
+        return incoming->n_message;
+}
+
 int n_dhcp4_incoming_query(NDhcp4Incoming *incoming, uint8_t option, const void **datap, size_t *n_datap) {
         if (!incoming->options[option].value)
                 return -ENODATA;
