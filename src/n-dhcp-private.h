@@ -27,6 +27,7 @@
 
 typedef struct NDhcp4Header NDhcp4Header;
 typedef struct NDhcp4Incoming NDhcp4Incoming;
+typedef struct NDhcp4Message NDhcp4Message;
 typedef struct NDhcp4Outgoing NDhcp4Outgoing;
 
 /*
@@ -141,6 +142,14 @@ struct NDhcp4Header {
         uint32_t siaddr;
         uint32_t giaddr;
         uint8_t chaddr[16];
+} _packed_;
+
+struct NDhcp4Message {
+        NDhcp4Header header;
+        uint8_t sname[64];
+        uint8_t file[128];
+        uint32_t magic;
+        uint8_t options[];
 } _packed_;
 
 int n_dhcp4_outgoing_new(NDhcp4Outgoing **outgoingp, size_t max_size, uint8_t overload);

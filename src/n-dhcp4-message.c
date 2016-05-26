@@ -25,19 +25,9 @@
 #include <string.h>
 #include "n-dhcp-private.h"
 
-typedef struct NDhcp4Message NDhcp4Message;
-
 #define N_DHCP4_MESSAGE_MIN_SIZE (N_DHCP4_NETWORK_MIN_SIZE -            \
                                   N_DHCP_NETWORK_UDP_SIZE -             \
                                   N_DHCP_NETWORK_IP4_SIZE)
-
-struct NDhcp4Message {
-        NDhcp4Header header;
-        uint8_t sname[64];
-        uint8_t file[128];
-        uint32_t magic;
-        uint8_t options[];
-} _packed_;
 
 struct NDhcp4Outgoing {
         NDhcp4Message *message;

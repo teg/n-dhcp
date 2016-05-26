@@ -36,10 +36,7 @@ typedef struct NDhcp4Packet NDhcp4Packet;
 struct NDhcp4Packet {
         struct iphdr ip;
         struct udphdr udp;
-        NDhcp4Header dhcp;
-        uint8_t sname[64];
-        uint8_t file[128];
-        uint32_t magic;
+        NDhcp4Message dhcp;
 } _packed_ ;
 
 static int n_dhcp4_network_raw_attach_filter(int fd,
@@ -74,41 +71,41 @@ static int n_dhcp4_network_raw_attach_filter(int fd,
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* verify dhcp OP is set to BOOTREPLY */
-                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.op)),                    /* A <- DHCP op */
+                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.op)),             /* A <- DHCP op */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, N_DHCP4_OP_BOOTREPLY, 1, 0),                        /* op == BOOTREPLY ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* verify DHCP htype is @arp_type */
-                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.htype)),                 /* A <- DHCP header type */
+                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.htype)),          /* A <- DHCP header type */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, arp_type, 1, 0),                                    /* header type == arp_type ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* match @hlen on DHCP hlen */
-                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.hlen)),                  /* A <- MAC address length */
+                BPF_STMT(BPF_LD + BPF_B + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.hlen)),           /* A <- MAC address length */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, dhcp_hlen, 1, 0),                                   /* address length == dhcp_hlen ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* match @xid on DHCP xid */
-                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, dhcp.xid)),                   /* A <- client identifier */
+                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.xid)),            /* A <- client identifier */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, xid, 1, 0),                                         /* client identifier == xid ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* match 6-bytes of @chaddr on DHCP chaddr */
                 BPF_STMT(BPF_LD + BPF_IMM, htobe32(*(uint32_t *)chaddr)),                               /* A <- 4 bytes of client's MAC */
                 BPF_STMT(BPF_MISC + BPF_TAX, 0),                                                        /* X <- A */
-                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, dhcp.chaddr)),                /* A <- 4 bytes of MAC from dhcp.chaddr */
+                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.chaddr)),         /* A <- 4 bytes of MAC from dhcp.chaddr */
                 BPF_STMT(BPF_ALU + BPF_XOR + BPF_X, 0),                                                 /* A xor X */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, 0, 1, 0),                                           /* A == 0 ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
                 BPF_STMT(BPF_LD + BPF_IMM, htobe16(*(uint16_t *)(chaddr + 4))),                         /* A <- remainder of client's MAC */
                 BPF_STMT(BPF_MISC + BPF_TAX, 0),                                                        /* X <- A */
-                BPF_STMT(BPF_LD + BPF_H + BPF_ABS, offsetof(NDhcp4Packet, dhcp.chaddr) + 4),            /* A <- remainder of MAC from dhcp.chaddr */
+                BPF_STMT(BPF_LD + BPF_H + BPF_ABS, offsetof(NDhcp4Packet, dhcp.header.chaddr) + 4),     /* A <- remainder of MAC from dhcp.chaddr */
                 BPF_STMT(BPF_ALU + BPF_XOR + BPF_X, 0),                                                 /* A xor X */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, 0, 1, 0),                                           /* A == 0 ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
                 /* verify DHCP magic is set correctly */
-                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, magic)),                      /* A <- DHCP magic cookie */
+                BPF_STMT(BPF_LD + BPF_W + BPF_ABS, offsetof(NDhcp4Packet, dhcp.magic)),                 /* A <- DHCP magic cookie */
                 BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, N_DHCP4_MESSAGE_MAGIC, 1, 0),                       /* cookie == DHCP magic cookie ? */
                 BPF_STMT(BPF_RET + BPF_K, 0),                                                           /* ignore */
 
